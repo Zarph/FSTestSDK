@@ -10,6 +10,9 @@
 
 #import "AFNetworkActivityIndicatorManager.h"
 
+#import "RootViewController.h"
+#import "FSTestSDKAPI.h"
+
 @implementation AppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -24,11 +27,11 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
-    UIViewController *viewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
-    self.navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    RootViewController *viewController = [[RootViewController alloc] init];
+    //self.navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = self.navigationController;
+    self.window.rootViewController = viewController;
     [self.window makeKeyAndVisible];
     
     return YES;
@@ -61,6 +64,17 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
 }
+
+
+-(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return [[FSTestSDKAPI sharedClient] handleOpenURL:url];
+}
+
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [[FSTestSDKAPI sharedClient] handleOpenURL:url];
+}
+
+
 
 #pragma mark - Core Data
 

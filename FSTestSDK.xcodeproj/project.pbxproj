@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		24BD9FA776B843539F539BE4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AFECBC773D54F1D800C86BD /* libPods.a */; };
+		2821D4A91704D50C0082283C /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2821D4A81704D50C0082283C /* RootViewController.m */; };
+		2821D4AD1704D65C0082283C /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2821D4AC1704D65B0082283C /* DemoViewController.m */; };
 		286DF8FF1704C2F500565F00 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 286DF8FE1704C2F500565F00 /* UIKit.framework */; };
 		286DF9011704C2F500565F00 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 286DF9001704C2F500565F00 /* Foundation.framework */; };
 		286DF9031704C2F500565F00 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 286DF9021704C2F500565F00 /* CoreGraphics.framework */; };
@@ -26,6 +28,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2821D4A71704D50C0082283C /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		2821D4A81704D50C0082283C /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		2821D4AB1704D65B0082283C /* DemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoViewController.h; sourceTree = "<group>"; };
+		2821D4AC1704D65B0082283C /* DemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoViewController.m; sourceTree = "<group>"; };
 		286DF8FA1704C2F500565F00 /* FSTestSDK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FSTestSDK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		286DF8FE1704C2F500565F00 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		286DF9001704C2F500565F00 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -104,6 +110,10 @@
 				286DF9071704C2F500565F00 /* Podfile */,
 				286DF9151704C2F500565F00 /* AppDelegate.h */,
 				286DF9161704C2F500565F00 /* AppDelegate.m */,
+				2821D4A71704D50C0082283C /* RootViewController.h */,
+				2821D4A81704D50C0082283C /* RootViewController.m */,
+				2821D4AB1704D65B0082283C /* DemoViewController.h */,
+				2821D4AC1704D65B0082283C /* DemoViewController.m */,
 				286DF90B1704C2F500565F00 /* Networking */,
 				286DF91E1704C2F500565F00 /* Models */,
 				286DF9091704C2F500565F00 /* Supporting Files */,
@@ -236,6 +246,8 @@
 				286DF9211704C2F500565F00 /* FSTestSDK.xcdatamodeld in Sources */,
 				286DF9241704C2F500565F00 /* FSTestSDKIncrementalStore.m in Sources */,
 				286DF9421704C45400565F00 /* FSTestSDKAPI.m in Sources */,
+				2821D4A91704D50C0082283C /* RootViewController.m in Sources */,
+				2821D4AD1704D65C0082283C /* DemoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

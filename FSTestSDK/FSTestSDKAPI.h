@@ -7,10 +7,21 @@
 //
 
 #import "AFOAuth2Client.h"
+@protocol HandleURLLoginDelegate <NSObject>
+
+-(void)performLoginFromHandle;
+
+@end
+
 
 @interface FSTestSDKAPI : AFOAuth2Client
 
-+ (FSTestSDKAPI *)sharedClient;
+@property (nonatomic, retain) NSDictionary *params;
+@property (nonatomic, retain) AFOAuthCredential *credential;
+@property (nonatomic, strong) NSObject <HandleURLLoginDelegate> *loginDelegate;
 
++ (FSTestSDKAPI *)sharedClient;
+-(void)authenticate;
+- (BOOL)handleOpenURL:(NSURL *)url;
 
 @end

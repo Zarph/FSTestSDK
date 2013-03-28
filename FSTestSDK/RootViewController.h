@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FSTestSDKAPI.h"
 
-@interface RootViewController : ViewController
+@interface RootViewController : UIViewController <HandleURLLoginDelegate>
 
 @end
