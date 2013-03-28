@@ -7,7 +7,7 @@
 //
 
 #import "DemoViewController.h"
-
+#import "FSTestSDKAPI.h"
 @interface DemoViewController ()
 
 @end
@@ -26,7 +26,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+	
+    [[FSTestSDKAPI sharedClient] getUserDataWithUserId:@"self" AndWithDelegate:nil];
+    
+    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
