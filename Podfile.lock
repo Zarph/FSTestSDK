@@ -1,0 +1,25 @@
+
+SPEC CHECKSUMS: 
+  TransformerKit: 5985969aae30fc2b50b0d6c1aa3ec0daccc57c40
+  AFNetworking: 3cbae45f61a9f995cdbd56bd571223910d7f4e44
+  AFIncrementalStore: 71e6815601f999933193ca97beb8a225ee3204e1
+  InflectorKit: 9dccab02f95541093995adac639342c9eb9e6c12
+  AFOAuth2Client: 2d1a21039fcc086254b0564428677fbbee0a4972
+
+PODS: 
+- AFIncrementalStore (0.4.0): 
+  - AFNetworking (>= 0.9.0)
+  - InflectorKit
+  - TransformerKit
+- AFNetworking (1.2.0)
+- AFOAuth2Client (0.1.0): 
+  - AFNetworking (~> 1.0)
+- InflectorKit (0.0.1)
+- TransformerKit (0.0.2)
+
+COCOAPODS: 0.16.3
+
+DEPENDENCIES: 
+- AFIncrementalStore
+- AFNetworking
+- AFOAuth2Client

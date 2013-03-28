@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24BD9FA776B843539F539BE4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AFECBC773D54F1D800C86BD /* libPods.a */; };
 		286DF8FF1704C2F500565F00 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 286DF8FE1704C2F500565F00 /* UIKit.framework */; };
 		286DF9011704C2F500565F00 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 286DF9001704C2F500565F00 /* Foundation.framework */; };
 		286DF9031704C2F500565F00 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 286DF9021704C2F500565F00 /* CoreGraphics.framework */; };
@@ -21,6 +22,7 @@
 		286DF91D1704C2F500565F00 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 286DF91C1704C2F500565F00 /* Default-568h@2x.png */; };
 		286DF9211704C2F500565F00 /* FSTestSDK.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 286DF91F1704C2F500565F00 /* FSTestSDK.xcdatamodeld */; };
 		286DF9241704C2F500565F00 /* FSTestSDKIncrementalStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 286DF9231704C2F500565F00 /* FSTestSDKIncrementalStore.m */; };
+		286DF9421704C45400565F00 /* FSTestSDKAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 286DF9411704C45400565F00 /* FSTestSDKAPI.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,10 @@
 		286DF9201704C2F500565F00 /* FSTestSDK.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FSTestSDK.xcdatamodel; sourceTree = "<group>"; };
 		286DF9221704C2F500565F00 /* FSTestSDKIncrementalStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FSTestSDKIncrementalStore.h; path = Classes/FSTestSDKIncrementalStore.h; sourceTree = "<group>"; };
 		286DF9231704C2F500565F00 /* FSTestSDKIncrementalStore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = FSTestSDKIncrementalStore.m; path = Classes/FSTestSDKIncrementalStore.m; sourceTree = "<group>"; };
+		286DF9401704C45400565F00 /* FSTestSDKAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSTestSDKAPI.h; sourceTree = "<group>"; };
+		286DF9411704C45400565F00 /* FSTestSDKAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSTestSDKAPI.m; sourceTree = "<group>"; };
+		2AFECBC773D54F1D800C86BD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		79D67FF988684AC7979D8A08 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +61,7 @@
 				286DF9011704C2F500565F00 /* Foundation.framework in Frameworks */,
 				286DF9031704C2F500565F00 /* CoreGraphics.framework in Frameworks */,
 				286DF9051704C2F500565F00 /* CoreData.framework in Frameworks */,
+				24BD9FA776B843539F539BE4 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,6 +74,7 @@
 				286DF9061704C2F500565F00 /* FSTestSDK */,
 				286DF8FD1704C2F500565F00 /* Frameworks */,
 				286DF8FB1704C2F500565F00 /* Products */,
+				79D67FF988684AC7979D8A08 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -85,6 +93,7 @@
 				286DF9001704C2F500565F00 /* Foundation.framework */,
 				286DF9021704C2F500565F00 /* CoreGraphics.framework */,
 				286DF9041704C2F500565F00 /* CoreData.framework */,
+				2AFECBC773D54F1D800C86BD /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -123,6 +132,8 @@
 				286DF90D1704C2F500565F00 /* FSTestSDKAPIClient.m */,
 				286DF9221704C2F500565F00 /* FSTestSDKIncrementalStore.h */,
 				286DF9231704C2F500565F00 /* FSTestSDKIncrementalStore.m */,
+				286DF9401704C45400565F00 /* FSTestSDKAPI.h */,
+				286DF9411704C45400565F00 /* FSTestSDKAPI.m */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -145,6 +156,7 @@
 				286DF8F61704C2F500565F00 /* Sources */,
 				286DF8F71704C2F500565F00 /* Frameworks */,
 				286DF8F81704C2F500565F00 /* Resources */,
+				EB78931CF0B9478BA5FB526F /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -196,6 +208,23 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		EB78931CF0B9478BA5FB526F /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		286DF8F61704C2F500565F00 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -206,6 +235,7 @@
 				286DF9171704C2F500565F00 /* AppDelegate.m in Sources */,
 				286DF9211704C2F500565F00 /* FSTestSDK.xcdatamodeld in Sources */,
 				286DF9241704C2F500565F00 /* FSTestSDKIncrementalStore.m in Sources */,
+				286DF9421704C45400565F00 /* FSTestSDKAPI.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,7 +275,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -266,7 +296,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -275,6 +305,7 @@
 		};
 		286DF9281704C2F500565F00 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79D67FF988684AC7979D8A08 /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FSTestSDK/FSTestSDK-Prefix.pch";
@@ -286,6 +317,7 @@
 		};
 		286DF9291704C2F500565F00 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79D67FF988684AC7979D8A08 /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FSTestSDK/FSTestSDK-Prefix.pch";
@@ -314,6 +346,7 @@
 				286DF9291704C2F500565F00 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
