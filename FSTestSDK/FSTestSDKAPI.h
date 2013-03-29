@@ -29,6 +29,8 @@
 -(void)authenticate;
 - (BOOL)handleOpenURL:(NSURL *)url;
 
+
+//USERS ENDPOINT
 -(void)getUserDataWithUserId:(NSString *)userID AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
 -(void)getLeaderboardsWithNeighborsParameter:(NSString *)neighbors AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
 -(void)getRequestsWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
@@ -48,6 +50,35 @@
 -(void)postUnfriendWithUserId:(NSString *)userID AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate;
 -(void)postUpdateWithPhoto:(UIImage *)photo AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate;
 
+
+//VENUES ENDPOINT
+-(void)getVenueDetailsWithVenueId:(NSString *)venueID AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)postAddVenueWithName:(NSString *)name AndLatitudeLongitude:(NSDictionary *)coords AndParameters:(NSDictionary *)venueParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getVenueCategoriesWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getExploreVenuesWithLatitudeLongitude:(NSDictionary *)coords OrNear:(NSString *)near AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getManagedVenuesWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getSearchVenuesWithLatitudeLongitude:(NSDictionary *)coords OrNear:(NSString *)near AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getSuggestCompletionVenuesWithLatitudeLongitude:(NSDictionary *)coords AndQuery:(NSString *)query AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getVenueTimeSeriesDataWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getTrendingVenuesWithLatitudeLongitude:(NSDictionary *)coords AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getVenueEventsWithVenueId:(NSString *)venueID AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getVenueHereNowWithVenueId:(NSString *)venueID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getVenueHoursWithVenueId:(NSString *)venueID AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getVenueLikesWithVenueId:(NSString *)venueID AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getVenueLinksWithVenueId:(NSString *)venueID AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getVenueListsWithVenueId:(NSString *)venueID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getVenueMenuWithVenueId:(NSString *)venueID AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getVenueNextVenuesWithVenueId:(NSString *)venueID AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getVenuePhotosWithVenueId:(NSString *)venueID AndGroup:(NSString *)group AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getVenueSimilarVenuesWithVenueId:(NSString *)venueID AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getVenueStatsWithVenueId:(NSString *)venueID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getVenueTipsWithVenueId:(NSString *)venueID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)postDislikeVenueWithWithVenueId:(NSString *)venueID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)postEditVenueWithVenueId:(NSString *)venueID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)postFlagVenueWithVenueId:(NSString *)venueID AndProblem:(NSString *)problem AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)postLikeVenueWithVenueId:(NSString *)venueID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)postProposeEditVenueWithVenueId:(NSString *)venueID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)postSetUserRoleForVenueWithVenueId:(NSString *)venueID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
 
 
 

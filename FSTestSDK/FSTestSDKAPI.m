@@ -705,6 +705,809 @@ static NSString * const kClientSecretString = @"IRH3TEV00N1ID1ZHWH0EWNRVVGNOZF2M
     
 }
 
+
+//VENUES ENDPOINT
+-(void)getVenueDetailsWithVenueId:(NSString *)venueID AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/%@", kServerAPIURL, venueID];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"VENUE details REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+-(void)postAddVenueWithName:(NSString *)name AndLatitudeLongitude:(NSDictionary *)coords AndParameters:(NSDictionary *)venueParams AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:venueParams];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    [mutableParameters setValue:name forKey:@"name"];
+    NSString *ll = [NSString stringWithFormat:@"%@,%@", [coords objectForKey:@"latitude"], [coords objectForKey:@"longitude"]];
+    [mutableParameters setValue:ll forKey:@"ll"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/add", kServerAPIURL];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Response object: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+-(void)getVenueCategoriesWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/categories", kServerAPIURL];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"VENUE CATEGORIES REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+
+-(void)getExploreVenuesWithLatitudeLongitude:(NSDictionary *)coords OrNear:(NSString *)near AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    if (coords) {
+        NSString *ll = [NSString stringWithFormat:@"%@,%@", [coords objectForKey:@"latitude"], [coords objectForKey:@"longitude"]];
+        [mutableParameters setValue:ll forKey:@"ll"];
+    }
+    if (near) {
+        [mutableParameters setValue:near forKey:@"near"];
+    }
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/explore", kServerAPIURL];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"EXPLORE VENUES REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+
+-(void)getManagedVenuesWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/managed", kServerAPIURL];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"MANAGED VENUES REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+
+-(void)getSearchVenuesWithLatitudeLongitude:(NSDictionary *)coords OrNear:(NSString *)near AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    if (coords) {
+        NSString *ll = [NSString stringWithFormat:@"%@,%@", [coords objectForKey:@"latitude"], [coords objectForKey:@"longitude"]];
+        [mutableParameters setValue:ll forKey:@"ll"];
+    }
+    if (near) {
+        [mutableParameters setValue:near forKey:@"near"];
+    }
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/search", kServerAPIURL];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"SEARCH VENUES REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+
+-(void)getSuggestCompletionVenuesWithLatitudeLongitude:(NSDictionary *)coords AndQuery:(NSString *)query AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    
+    NSString *ll = [NSString stringWithFormat:@"%@,%@", [coords objectForKey:@"latitude"], [coords objectForKey:@"longitude"]];
+    [mutableParameters setValue:ll forKey:@"ll"];
+    [mutableParameters setValue:query forKey:@"query"];
+    
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/suggestcompletion", kServerAPIURL];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"SUGGEST COMPLETION VENUES REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+
+-(void)getVenueTimeSeriesDataWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/timeseries", kServerAPIURL];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"VENUE TIME SERIES DATA REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+
+-(void)getTrendingVenuesWithLatitudeLongitude:(NSDictionary *)coords AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSString *ll = [NSString stringWithFormat:@"%@,%@", [coords objectForKey:@"latitude"], [coords objectForKey:@"longitude"]];
+    [mutableParameters setValue:ll forKey:@"ll"];
+    
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/trending", kServerAPIURL];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"TRENDING VENUES REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+
+-(void)getVenueEventsWithVenueId:(NSString *)venueID AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/%@/events", kServerAPIURL, venueID];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"VENUE EVENTS REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+
+-(void)getVenueHereNowWithVenueId:(NSString *)venueID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/%@/herenow", kServerAPIURL, venueID];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"VENUE HERE NOW REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+
+-(void)getVenueHoursWithVenueId:(NSString *)venueID AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/%@/hours", kServerAPIURL, venueID];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"VENUE HOURS REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+-(void)getVenueLikesWithVenueId:(NSString *)venueID AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/%@/likes", kServerAPIURL, venueID];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"VENUE LIKES REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+    
+}
+
+
+-(void)getVenueLinksWithVenueId:(NSString *)venueID AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/%@/links", kServerAPIURL, venueID];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"VENUE LINKS REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+-(void)getVenueListsWithVenueId:(NSString *)venueID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/%@/listed", kServerAPIURL, venueID];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"VENUE LISTS REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+
+-(void)getVenueMenuWithVenueId:(NSString *)venueID AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/%@/menu", kServerAPIURL, venueID];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"VENUE MENU REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+
+-(void)getVenueNextVenuesWithVenueId:(NSString *)venueID AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/%@/nextvenues", kServerAPIURL, venueID];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"NEXT VENUES REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+-(void)getVenuePhotosWithVenueId:(NSString *)venueID AndGroup:(NSString *)group AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    [mutableParameters setValue:group forKey:@"group"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/%@/photos", kServerAPIURL, venueID];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"VENUE PHOTOS REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+
+-(void)getVenueSimilarVenuesWithVenueId:(NSString *)venueID AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/%@/similar", kServerAPIURL, venueID];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"SIMILAR VENUES REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+
+-(void)getVenueStatsWithVenueId:(NSString *)venueID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/%@/stats", kServerAPIURL, venueID];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"VENUE STATS REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+
+-(void)getVenueTipsWithVenueId:(NSString *)venueID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/%@/tips", kServerAPIURL, venueID];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"VENUE TIPS REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+
+-(void)postDislikeVenueWithWithVenueId:(NSString *)venueID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/%@/dislike", kServerAPIURL, venueID];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"DISLIKE VENUE POST REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+
+-(void)postEditVenueWithVenueId:(NSString *)venueID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/%@/edit", kServerAPIURL, venueID];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"EDIT VENUE POST REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+
+-(void)postFlagVenueWithVenueId:(NSString *)venueID AndProblem:(NSString *)problem AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    [mutableParameters setValue:problem forKey:@"problem"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/%@/flag", kServerAPIURL, venueID];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"FLAG VENUE POST REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+
+-(void)postLikeVenueWithVenueId:(NSString *)venueID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/%@/like", kServerAPIURL, venueID];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"LIKE VENUE POST REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+
+-(void)postProposeEditVenueWithVenueId:(NSString *)venueID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/%@/proposeedit", kServerAPIURL, venueID];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"PROPOSE EDIT VENUE POST REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+
+-(void)postSetUserRoleForVenueWithVenueId:(NSString *)venueID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@venues/%@/setrole", kServerAPIURL, venueID];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"SET USER ROLE FOR VENUE POST REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+
+
+
 //helpers
 - (void)getPath:(NSString *)path
      parameters:(NSDictionary *)parameters
