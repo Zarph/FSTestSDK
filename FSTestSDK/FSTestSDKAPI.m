@@ -264,7 +264,7 @@ static NSString * const kClientSecretString = @"IRH3TEV00N1ID1ZHWH0EWNRVVGNOZF2M
         [mutableParameters setValue:[searchParams objectForKey:@"fbid"] forKey:@"fbid"];
     
     if (name)
-        [mutableParameters setValue:name forKey:@"neighbors"];
+        [mutableParameters setValue:name forKey:@"name"];
     
     NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
     
@@ -517,40 +517,6 @@ static NSString * const kClientSecretString = @"IRH3TEV00N1ID1ZHWH0EWNRVVGNOZF2M
     }];
 }
 
--(void)getUserTodosWithUserId:(NSString *)userID AndParameters:(NSDictionary *)todosParam AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate{
-    
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"yyyy-MM-dd"];
-    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
-    [dateFormat setDateFormat:@"yyyyMMdd"];
-    NSString *dateForFS = [dateFormat stringFromDate:date];
-    
-    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
-    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
-    [mutableParameters setValue:dateForFS forKey:@"v"];
-    
-    if ([todosParam objectForKey:@"sort"])
-        [mutableParameters setValue:[todosParam objectForKey:@"sort"] forKey:@"sort"];
-    if ([todosParam objectForKey:@"ll"])
-        [mutableParameters setValue:[todosParam objectForKey:@"ll"] forKey:@"ll"];
-    
-    
-    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
-    
-    NSString *path =  [NSString stringWithFormat:@"%@users/%@/todos", kServerAPIURL, userID];
-    
-    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSLog(@"USER Todos REQUEST");
-        NSLog(@"Response object: %@", responseObject);
-        //Complete with delegate call
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        
-    }];
-}
-
 //For now ONLY SELF SUPPORTED - Foursquare API says.
 
 
@@ -593,8 +559,15 @@ static NSString * const kClientSecretString = @"IRH3TEV00N1ID1ZHWH0EWNRVVGNOZF2M
 
 -(void)postApproveWithUserId:(NSString *)userID AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
     
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
-    [mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
     NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
     
     NSString *path =  [NSString stringWithFormat:@"%@users/%@/approve", kServerAPIURL, userID];
@@ -610,8 +583,15 @@ static NSString * const kClientSecretString = @"IRH3TEV00N1ID1ZHWH0EWNRVVGNOZF2M
 
 -(void)postDenyWithUserId:(NSString *)userID AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
     
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
-    [mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
     NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
     
     NSString *path =  [NSString stringWithFormat:@"%@users/%@/deny", kServerAPIURL, userID];
@@ -627,8 +607,15 @@ static NSString * const kClientSecretString = @"IRH3TEV00N1ID1ZHWH0EWNRVVGNOZF2M
 
 -(void)postRequestWithUserId:(NSString *)userID AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
     
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
-    [mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
     NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
     
     NSString *path =  [NSString stringWithFormat:@"%@users/%@/request", kServerAPIURL, userID];
@@ -644,8 +631,15 @@ static NSString * const kClientSecretString = @"IRH3TEV00N1ID1ZHWH0EWNRVVGNOZF2M
 
 -(void)postSetPingsWithUserId:(NSString *)userID AndValue:(NSString *)value AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
     
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
-    [mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
     [mutableParameters setValue:value forKey:@"value"];
     
     NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
@@ -663,9 +657,15 @@ static NSString * const kClientSecretString = @"IRH3TEV00N1ID1ZHWH0EWNRVVGNOZF2M
 
 -(void)postUnfriendWithUserId:(NSString *)userID AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
     
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
-    [mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
-    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
     
     NSString *path =  [NSString stringWithFormat:@"%@users/%@/unfriend", kServerAPIURL, userID];
     
@@ -680,8 +680,15 @@ static NSString * const kClientSecretString = @"IRH3TEV00N1ID1ZHWH0EWNRVVGNOZF2M
 
 -(void)postUpdateWithPhoto:(UIImage *)photo AndWithDelegate:(NSObject<FoursquareDelegate> *)delegate {
     
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
-    [mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
 #warning no estoy muy seguro de pasar la foto asi.
     [mutableParameters setValue:photo forKey:@"photo"];
 
