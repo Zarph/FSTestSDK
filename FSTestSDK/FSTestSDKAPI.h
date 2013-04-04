@@ -7,6 +7,10 @@
 //
 
 #import "AFOAuth2Client.h"
+
+#import "AFRESTClient.h"
+
+
 @protocol HandleURLLoginDelegate <NSObject>
 
 -(void)performLoginFromHandle;
@@ -80,8 +84,15 @@
 -(void)postProposeEditVenueWithVenueId:(NSString *)venueID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
 -(void)postSetUserRoleForVenueWithVenueId:(NSString *)venueID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
 
-
-
-
+//CHECKINS ENDPOINT
+-(void)getCheckinDataWithCheckinId:(NSString *)checkinID WithParameters:(NSDictionary *)checkinParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)postAddCheckinWithvenueId:(NSString *)venueId WithParameters:(NSDictionary *)addParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getRecentCheckinsWithParameters:(NSDictionary *)recentCheckinParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getCheckinLikesWithCheckinId:(NSString *)checkinID AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)postAddCommentInCheckinWithCheckinId:(NSString *)checkinID WithParameters:(NSDictionary *)commentParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)postAddPostInCheckinWithCheckinId:(NSString *)checkinID WithParameters:(NSDictionary *)postParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)postDeleteCommentInCheckinWithCheckinId:(NSString *)checkinID WithCommentID:(NSString *)commentId AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)postAddOrRemoveLikeInCheckinWithCheckinId:(NSString *)checkinID WithAction:(NSString *)set AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate; //1-> Like  0->Unlike
+-(void)postReplyWithCheckinId:(NSString *)checkinID WithText:(NSString *)text WithParams:(NSDictionary *)replyParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
 
 @end

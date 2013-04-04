@@ -689,19 +689,35 @@ static NSString * const kClientSecretString = @"IRH3TEV00N1ID1ZHWH0EWNRVVGNOZF2M
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
     [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
     [mutableParameters setValue:dateForFS forKey:@"v"];
-#warning no estoy muy seguro de pasar la foto asi.
     [mutableParameters setValue:photo forKey:@"photo"];
-
-    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
     
+    NSData* uploadFile = nil;
+	if ([mutableParameters objectForKey:@"photo"]) {
+		uploadFile = (NSData*)UIImageJPEGRepresentation([mutableParameters objectForKey:@"photo"],70);
+		[mutableParameters removeObjectForKey:@"photo"];
+	}
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+
     NSString *path =  [NSString stringWithFormat:@"%@users/self/update", kServerAPIURL];
     
-    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Response object: %@", responseObject);
+    NSMutableURLRequest *apiRequest = [self multipartFormRequestWithMethod:@"POST" path:path parameters:parameters constructingBodyWithBlock: ^(id <AFMultipartFormData>formData) {
+		if (uploadFile) {
+			[formData appendPartWithFileData:uploadFile name:@"photo" fileName:@"text.jpg" mimeType:@"image/jpeg"];
+		}
+	}];
+    
+    AFJSONRequestOperation* operation = [[AFJSONRequestOperation alloc] initWithRequest: apiRequest];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //success!
+        NSLog(@"SUCCESS! :D, %@", responseObject);
+        // completionBlock(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        
+        NSLog(@"FAILURE :(");
+        //failure :(
+        // completionBlock([NSDictionary dictionaryWithObject:[error localizedDescription] forKey:@"error"]);
     }];
+    [operation start];
     
 }
 
@@ -1505,9 +1521,250 @@ static NSString * const kClientSecretString = @"IRH3TEV00N1ID1ZHWH0EWNRVVGNOZF2M
     
 }
 
+//CHECKINS ENDPOINT
+-(void)getCheckinDataWithCheckinId:(NSString *)checkinID WithParameters:(NSDictionary *)checkinParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate{
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:checkinParams];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@/checkins/%@", kServerAPIURL, checkinID];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"CHECKIN REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
 
+-(void)postAddCheckinWithvenueId:(NSString *)venueId WithParameters:(NSDictionary *)addParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate{
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:addParams];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    [mutableParameters setValue:venueId forKey:@"venueId"];
 
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@/checkins/add", kServerAPIURL];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"POST ADD CHECKIN POST REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
 
+-(void)getRecentCheckinsWithParameters:(NSDictionary *)recentCheckinParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate{
+    
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:recentCheckinParams];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@/checkins/recent", kServerAPIURL];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"CHECKIN REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+-(void)getCheckinLikesWithCheckinId:(NSString *)checkinID AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate{
+    
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@/checkins/%@/likes", kServerAPIURL, checkinID];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"CHECKIN REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)postAddCommentInCheckinWithCheckinId:(NSString *)checkinID WithParameters:(NSDictionary *)commentParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate{
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:commentParams];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@/checkins/%@/addcomment", kServerAPIURL, checkinID];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"POST ADD COMMENT POST REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+-(void)postAddPostInCheckinWithCheckinId:(NSString *)checkinID WithParameters:(NSDictionary *)postParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate{
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:postParams];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@/checkins/%@/addpost", kServerAPIURL, checkinID];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"POST ADD POST POST REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+-(void)postDeleteCommentInCheckinWithCheckinId:(NSString *)checkinID WithCommentID:(NSString *)commentId AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate{
+   
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    [mutableParameters setValue:commentId forKey:@"commentId"];
+
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@/checkins/%@/deletecomment", kServerAPIURL, checkinID];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"POST DELETE COMMENT POST REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)postAddOrRemoveLikeInCheckinWithCheckinId:(NSString *)checkinID WithAction:(NSString *)set AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate{
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    [mutableParameters setValue:set forKey:@"set"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@/checkins/%@/like", kServerAPIURL, checkinID];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"POST ADD OR REMOVE LIKE POST REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)postReplyWithCheckinId:(NSString *)checkinID WithText:(NSString *)text WithParams:(NSDictionary *)replyParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate{
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:replyParams];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    [mutableParameters setValue:text forKey:@"text"];
+
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@/checkins/%@/reply", kServerAPIURL, checkinID];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"POST REPLY POST REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
 //helpers
 - (void)getPath:(NSString *)path
      parameters:(NSDictionary *)parameters

@@ -47,7 +47,7 @@
    // [[FSTestSDKAPI sharedClient] postSetPingsWithUserId:@"23342898" AndValue:@"True" AndWithDelegate:nil];
    //[[FSTestSDKAPI sharedClient ] postUnfriendWithUserId:@"35800131" AndWithDelegate:nil];
    
-    /* NOT WORKING YET _____ UIImage *image = [UIImage imageNamed:@"51112.jpg"];
+   /*UIImage *image = [UIImage imageNamed:@"51112.jpg"];
     
     [[FSTestSDKAPI sharedClient]postUpdateWithPhoto:image AndWithDelegate:nil];*/
     
