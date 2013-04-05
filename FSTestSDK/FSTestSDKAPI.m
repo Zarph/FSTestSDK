@@ -1765,6 +1765,231 @@ static NSString * const kClientSecretString = @"IRH3TEV00N1ID1ZHWH0EWNRVVGNOZF2M
         
     }];
 }
+
+//TIPS ENDPOINT
+
+-(void)getTipDataWithTipId:(NSString *)tipId WithParameters:(NSDictionary *)tipParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate{
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:tipParams];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@/tips/%@", kServerAPIURL, tipId];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"TIP GET REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+-(void)postTipWithVenueId:(NSString *)venueId WithText:(NSString *)text WithParams:(NSDictionary *)tipParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate{
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:tipParams];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    [mutableParameters setValue:text forKey:@"text"];
+    [mutableParameters setValue:venueId forKey:@"venueId"];
+
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@/tips/add", kServerAPIURL];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"TIP POST REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)getTipLikesWithTipId:(NSString *)tipId AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate{
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@/tips/%@/likes", kServerAPIURL, tipId];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"TIP GET REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+-(void)getTipListsWithTipId:(NSString *)tipId WithParameters:(NSDictionary *)tipParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate{
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:tipParams];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@/tips/%@/listed", kServerAPIURL, tipId];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"TIP GET REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)getTipSavesWithTipId:(NSString *)tipId AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate{
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@/tips/%@/saves", kServerAPIURL, tipId];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"TIP GET REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+-(void)postFlagATipWithTipId:(NSString *)tipId WithProblem:(NSString *)problem WithParams:(NSDictionary *)tipParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate{
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:tipParams];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    [mutableParameters setValue:problem forKey:@"problem"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@/tips/%@/flag", kServerAPIURL, tipId];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"TIP POST REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+-(void)postAddOrRemoveLikeATipWithTipId:(NSString *)tipId WithAction:(NSString *)set AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate{
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    [mutableParameters setValue:set forKey:@"set"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@/tips/%@/like", kServerAPIURL, tipId];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"TIP POST REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+-(void)postUnmarkTipWithTipId:(NSString *)tipId AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate{
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date = [dateFormat dateFromString:[[NSString stringWithFormat:@"%@",[NSDate date]] substringToIndex:10]];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    NSString *dateForFS = [dateFormat stringFromDate:date];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth_token"];
+    [mutableParameters setValue:dateForFS forKey:@"v"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@/tips/%@/unmark", kServerAPIURL, tipId];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"TIP POST REQUEST");
+        NSLog(@"Response object: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
 //helpers
 - (void)getPath:(NSString *)path
      parameters:(NSDictionary *)parameters

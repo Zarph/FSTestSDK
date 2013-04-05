@@ -95,4 +95,16 @@
 -(void)postAddOrRemoveLikeInCheckinWithCheckinId:(NSString *)checkinID WithAction:(NSString *)set AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate; //1-> Like  0->Unlike
 -(void)postReplyWithCheckinId:(NSString *)checkinID WithText:(NSString *)text WithParams:(NSDictionary *)replyParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
 
+//TIPS ENDPOINT
+
+-(void)getTipDataWithTipId:(NSString *)tipId WithParameters:(NSDictionary *)tipParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)postTipWithVenueId:(NSString *)venueId WithText:(NSString *)text WithParams:(NSDictionary *)tipParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getTipLikesWithTipId:(NSString *)tipId AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getTipListsWithTipId:(NSString *)tipId WithParameters:(NSDictionary *)tipParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)getTipSavesWithTipId:(NSString *)tipId AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+-(void)postFlagATipWithTipId:(NSString *)tipId WithProblem:(NSString *)problem WithParams:(NSDictionary *)tipParams AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+//The specific problem with the tip. Must be one of "offensive", "spam", or "nolongerrelevant".
+-(void)postAddOrRemoveLikeATipWithTipId:(NSString *)tipId WithAction:(NSString *)set AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate; //1-> Like  0->Unlike
+-(void)postUnmarkTipWithTipId:(NSString *)tipId AndWithDelegate:(NSObject <FoursquareDelegate> *)delegate;
+
 @end
